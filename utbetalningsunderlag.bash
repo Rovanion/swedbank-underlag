@@ -1,6 +1,7 @@
 #!/bin/bash
+set -e
 
-echo "Det här skriptet antar att du har ställt in firefox så att den skrollar precis en rad i swedbank per scrollhjulssteg som görs. Detta görs i skrivande stund genom att öppna about:config och sätta mousewheel.default.delta_multiplier_y till 30 och mousewheel.min_line_scroll_amount till 1. Se även till att stänga av scrollanimationen."
+echo "Det här skriptet antar att du har ställt in firefox så att den skrollar precis en rad i swedbank per scrollhjulssteg som görs. Detta görs i skrivande stund genom att öppna about:config och sätta mousewheel.default.delta_multiplier_y till 40 och mousewheel.min_line_scroll_amount till 1. Se även till att stänga av scrollanimationen."
 echo
 
 echo "Markera Firofox-fönstret med Swedbank öppnat och navigerat till kontoutdraget."
@@ -8,7 +9,7 @@ firefox=$(xdotool selectwindow)
 echo "Det valda fönstret har titel " $(xdotool getwindowname $firefox)
 
 echo "Öppnar en sjuhelvetes massa tabbar. "
-xdotool mousemove --sync --window $firefox 619 536
+xdotool mousemove --sync --window $firefox 619 540
 
 # Av någon jävla anledning visar Swedbank 114 rader per sida. Fråga mig inte varför.
 antal_steg=10
@@ -30,16 +31,9 @@ for i in $(seq $antal_steg); do
 		# Gå till nästa tabb åt höger.
 		xdotool key --window $firefox "alt+Next"
 		sleep 0.1
-		# Here we are relying on the Firefox plugin Vim Vixen because
-		# apparently it's in-fucking possible to search for button labels in
-		# normal Firefox. How would any blind person ever be able to use this
-		# software?
 		echo "Initierar utskriften."
-		# Firefox skiter på sig om man inte har musen över
-		# fönstret. Fokuset ligger på magiskt vis kvar i den gamla tabben
-		# som inte är i fokus.
 		xdotool key --window $firefox --delay 100 "shift+Tab" "shift+Tab" "Return"
-		sleep 1
+		sleep 1.1
 		printer_dialog=$(xdotool getactivewindow)
 		# By now the print dialog should have appeared and we want to elect to
 		# print to file.
