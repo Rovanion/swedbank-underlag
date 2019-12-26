@@ -16,7 +16,7 @@ echo "Öppnar $antal_steg tabbar med verifikat."
 for i in $(seq $antal_steg); do
 		xdotool click 2
 		xdotool click 5
-		sleep 0.1
+		sleep 0.05
 done
 
 echo "Går igenom $antal_steg tabbar och skriver ut dem."
