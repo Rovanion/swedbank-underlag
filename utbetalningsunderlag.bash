@@ -14,7 +14,6 @@ xdotool mousemove --sync --window $firefox 619 536
 antal_steg=10
 echo "Öppnar $antal_steg tabbar med verifikat."
 for i in $(seq $antal_steg); do
-		echo $i
 		xdotool click 2
 		xdotool click 5
 		sleep 0.1
