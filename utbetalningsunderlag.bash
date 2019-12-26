@@ -24,7 +24,7 @@ echo "Går igenom $antal_steg tabbar och skriver ut dem."
 for i in $(seq $antal_steg); do
 	  # Det här kan vara helt jävla onödigt men Firefox är asmuppigt om
 	  # musen är inte där man försöker operera.
-		xdotool mousemove --sync --window $firefox 2 2
+		xdotool mousemove --window $firefox 2 2
 	  sleep 0.1
 		xdotool click 1
 		sleep 0.1
