@@ -8,23 +8,25 @@ echo "Markera Firofox-fönstret med Swedbank öppnat och navigerat till kontoutd
 firefox=$(xdotool selectwindow)
 echo "Det valda fönstret har titel " $(xdotool getwindowname $firefox)
 
-echo "Öppnar en sjuhelvetes massa tabbar. "
-xdotool mousemove --sync --window $firefox 619 540
+echo "Öppnar en sjuhelvetes massa tabbar."
+xdotool mousemove --sync --window $firefox 580 540
 
 # Av någon jävla anledning visar Swedbank 114 rader per sida. Fråga mig inte varför.
 antal_steg=10
-echo "Öppnar $antal_steg tabbar med verifikat."
-for i in $(seq $antal_steg); do
+if [[ ! $1 == '--skip-open' ]]; then
+	echo "Öppnar $antal_steg tabbar med verifikat."
+	for i in $(seq $antal_steg); do
 		xdotool click 2
 		xdotool click 5
-		sleep 0.05
-done
+		sleep 0.1
+	done
+fi
 
 echo "Går igenom $antal_steg tabbar och skriver ut dem."
 for i in $(seq $antal_steg); do
 	  # Det här kan vara helt jävla onödigt men Firefox är asmuppigt om
 	  # musen är inte där man försöker operera.
-		xdotool mousemove --window $firefox 2 2
+		xdotool mousemove --window $firefox 40 2
 	  sleep 0.1
 		xdotool click 1
 		sleep 0.1
@@ -33,7 +35,7 @@ for i in $(seq $antal_steg); do
 		sleep 0.1
 		echo "Initierar utskriften."
 		xdotool key --window $firefox --delay 100 "shift+Tab" "shift+Tab" "Return"
-		sleep 1.1
+		sleep 1.2
 		printer_dialog=$(xdotool getactivewindow)
 		# By now the print dialog should have appeared and we want to elect to
 		# print to file.
